@@ -2,7 +2,7 @@ import sys
 import pygame
 from src.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
 from src.components.menu import HauptmenuZustand
-from src.config import SpielKonfiguration
+from src.utilities.config import SpielKonfiguration
 
 
 def main():
@@ -11,7 +11,7 @@ def main():
     pygame.display.set_caption("ErzCollector")
     uhr = pygame.time.Clock()
 
-    konfiguration = SpielKonfiguration('config.ini')
+    konfiguration = SpielKonfiguration('utilities/config.ini')
     zustand = HauptmenuZustand(bildschirm, uhr, konfiguration)
 
     while True:

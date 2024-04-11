@@ -11,7 +11,7 @@ class SpielKonfiguration:
         self.config = configparser.ConfigParser()
         self.config.read(self.dateipfad)
 
-        self.lkw_geschwindigkeit = int(self.config['LKW']['geschwindigkeit'])
+        self.lkw_geschwindigkeit = float(self.config['LKW']['geschwindigkeit'])
 
         self.hubschrauber_geschwindigkeit = float(self.config['Hubschrauber']['geschwindigkeit'])
 

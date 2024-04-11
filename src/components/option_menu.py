@@ -46,13 +46,13 @@ class OptionenMenu:
                         self.laeuft = False
                 elif ereignis.type == pygame.MOUSEBUTTONDOWN:
                     if lkw_increment_button.collidepoint(ereignis.pos):
-                        self.konfiguration.lkw_geschwindigkeit = min(self.konfiguration.lkw_geschwindigkeit + 1, 10)
+                        self.konfiguration.lkw_geschwindigkeit = min(self.konfiguration.lkw_geschwindigkeit + 0.5, 10)
                     elif lkw_decrement_button.collidepoint(ereignis.pos):
-                        self.konfiguration.lkw_geschwindigkeit = max(self.konfiguration.lkw_geschwindigkeit - 1, 1)
+                        self.konfiguration.lkw_geschwindigkeit = max(self.konfiguration.lkw_geschwindigkeit - 0.5, 1)
                     elif hubschrauber_increment_button.collidepoint(ereignis.pos):
-                        self.konfiguration.hubschrauber_geschwindigkeit = min(self.konfiguration.hubschrauber_geschwindigkeit + 1, 10)
+                        self.konfiguration.hubschrauber_geschwindigkeit = min(self.konfiguration.hubschrauber_geschwindigkeit + 0.5, 10)
                     elif hubschrauber_decrement_button.collidepoint(ereignis.pos):
-                        self.konfiguration.hubschrauber_geschwindigkeit = max(self.konfiguration.hubschrauber_geschwindigkeit - 1, 1)
+                        self.konfiguration.hubschrauber_geschwindigkeit = max(self.konfiguration.hubschrauber_geschwindigkeit - 0.5, 1)
 
             self.bildschirm.fill((255, 255, 255))
             self.text_zeichnen("Optionen-Menü - Drücke ESC, um zurückzukehren", BILDSCHIRM_BREITE // 2, 100)

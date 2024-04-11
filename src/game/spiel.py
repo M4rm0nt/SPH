@@ -1,6 +1,5 @@
 import pygame
 
-from src import config
 from src.components.spiel_objekte import LKW, Erzquelle, Lager, Tankstelle, Hubschrauberlandeplatz, Hubschrauber
 from src.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
 
@@ -124,3 +123,4 @@ class SpielZustand:
         text_surface = schrift_gross.render("[PAUSE]", True, (255, 0, 0))
         text_rect = text_surface.get_rect(center=(BILDSCHIRM_BREITE / 2, BILDSCHIRM_HOEHE / 2))
         self.bildschirm.blit(text_surface, text_rect)
+        

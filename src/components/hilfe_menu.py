@@ -2,6 +2,7 @@ import pygame
 import sys
 from src.einstellungen import BILDSCHIRM_BREITE
 
+
 class HilfeMenu:
     def __init__(self, bildschirm, uhr):
         self.bildschirm = bildschirm

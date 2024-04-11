@@ -24,9 +24,7 @@ class HauptmenuZustand:
         self.aktuelle_auswahl = 0
 
     def spielen(self):
-        print("Spiel startet")
         from src.game.spiel import SpielZustand
-        # Fügen Sie das fehlende Argument hinzu
         return SpielZustand(self.bildschirm, self.uhr, self.konfiguration)
 
     def optionen(self):
@@ -55,7 +53,7 @@ class HauptmenuZustand:
             elif ereignis.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(self.buttons):
                     if button.rechteck.collidepoint(ereignis.pos):
-                        self.aktuelle_auswahl = i  # Aktualisiere die Auswahl basierend auf der Mausposition
+                        self.aktuelle_auswahl = i
                         result = button.aktion()
                         if result:
                             return result
