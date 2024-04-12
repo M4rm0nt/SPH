@@ -1,0 +1,40 @@
+﻿Herzlich willkommen bei ErzCollector!
+
+Über das Spiel:
+ErzCollector ist ein strategisches und geschicklichkeitsbasiertes Spiel, in dem du als Lastwagenfahrer Erz sammelst und transportierst, während du feindlichen Angriffen von Hubschraubern ausweichst. Ziel ist es, so viel Erz wie möglich sicher zum Abladeplatz zu bringen, ohne dass es von den Hubschraubern gestohlen wird. Manage deine Ressourcen klug, meide Gefahren und maximiere deine Erzgewinnung, um zu gewinnen.
+
+Startanleitung:
+Um ErzCollector zu spielen, folge diesen Schritten, um das Spiel über das Terminal zu starten:
+
+Terminal öffnen:
+Starte das Terminal auf deinem Computer.
+Projektverzeichnis:
+Navigiere im Terminal zum Hauptverzeichnis deines Projekts.
+Python-Umgebung:
+Stelle sicher, dass du die richtige Python-Umgebung aktiviert hast, die alle notwendigen Abhängigkeiten für das Spiel enthält.
+Spiel starten:
+Gib python src/main.py in das Terminal ein und bestätige mit Enter. Das Spiel wird nun gestartet und erscheint in einem neuen Fenster oder Bildschirm, abhängig von deiner Konfiguration.
+Spielspaß:
+Erfreue dich am Spiel und den Herausforderungen, die es bietet.
+Steuerung des Spiels:
+
+Bewegung: Verwende die Pfeiltasten oder WASD-Tasten, um deinen Lastwagen auf der Karte zu steuern.
+Pause: Die Taste P pausiert das Spiel, sodass du eine Pause einlegen oder deine Strategie überdenken kannst.
+Ziele und Herausforderungen:
+
+Hauptziel: Sammle so viel Erz wie möglich und transportiere es zum Abladeplatz.
+Vermeidung von Hubschraubern: Achte auf Hubschrauber, die versuchen, dein gesammeltes Erz zu stehlen. Eine Kollision mit einem Hubschrauber kann zum Verlust des Erzes führen und das Spielende beschleunigen.
+Ressourcenmanagement: Überwache den Kraftstoffstand deines Lastwagens. Du kannst an Tankstellen nachtanken, die über die Karte verteilt sind.
+Spielablauf:
+
+Startbildschirm: Im Hauptmenü kannst du das Spiel starten, Einstellungen ändern oder das Hilfe-Menü aufrufen.
+Erz sammeln: Fahre über Erzquellen, die auf der Karte erscheinen, um Erz aufzuladen.
+Erz transportieren: Bringe das gesammelte Erz sicher zu den Abladeplätzen. Jedes erfolgreich abgeladene Erz erhöht deine Punktzahl.
+Feindvermeidung: Weiche den Hubschraubern aus, die versuchen, das Erz während des Transports zu stehlen.
+Anpassungsoptionen:
+
+Im Optionsmenü kannst du verschiedene Spieleinstellungen anpassen, darunter die Geschwindigkeit deines Lastwagens und die Schwierigkeit der Hubschrauber. Nutze diese Einstellungen, um das Spielerlebnis deinen Fähigkeiten anzupassen.
+Endziel und Siegbedingungen:
+Das Spiel wird gewonnen, indem du mehr als 80% des auf der Karte verfügbaren Erzes sammelst und sicher ablieferst. Vermeide es, mehr als 20% deines gesammelten Erzes zu verlieren, da dies zu einer Niederlage führen kann.
+
+Viel Erfolg und Spaß bei ErzCollector!
