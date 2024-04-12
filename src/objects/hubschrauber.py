@@ -12,6 +12,7 @@ class Hubschrauber(pygame.sprite.Sprite):
         self.hubschrauberlandeplatz = hubschrauberlandeplatz
         self.erz_gestohlen = False
         self.gestohlenes_erz = 0
+        self.abgeladenes_erz = 0
         self.ausrichtung = "rechts"
 
     def update(self):
@@ -35,6 +36,8 @@ class Hubschrauber(pygame.sprite.Sprite):
         self.bewegen_zu(self.hubschrauberlandeplatz.rect.centerx, self.hubschrauberlandeplatz.rect.centery)
 
     def erz_abladen(self):
+        self.abgeladenes_erz += self.gestohlenes_erz
+        self.gestohlenes_erz = 0
         self.erz_gestohlen = False
 
     def bewegen_zu(self, ziel_x, ziel_y):
