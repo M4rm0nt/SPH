@@ -1,6 +1,6 @@
 import sys
 import pygame
-from src.game.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
+from src.utilities.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
 from src.menus.menu import HauptmenuZustand
 from src.utilities.config import SpielKonfiguration
 

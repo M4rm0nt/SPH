@@ -1,6 +1,6 @@
 import pygame
 
-from src.game.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, Tasten
+from src.utilities.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, Tasten
 
 
 class LKW(pygame.sprite.Sprite):
@@ -40,8 +40,7 @@ class LKW(pygame.sprite.Sprite):
                 self.kill()
 
     def kollision_pruefen(self, erz_quelle, lager, tankstelle, hubschrauber_gruppe):
-        kollidierter_hubschrauber = pygame.sprite.spritecollideany(self, hubschrauber_gruppe,
-                                                                   collided=lambda s1, s2: s1.hitbox.colliderect(s2.rect))
+        kollidierter_hubschrauber = pygame.sprite.spritecollideany(self, hubschrauber_gruppe, collided=lambda s1, s2: s1.hitbox.colliderect(s2.rect))
         if kollidierter_hubschrauber and self.erz > 0:
             self.gestohlenes_erz += self.erz
             self.erz = 0

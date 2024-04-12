@@ -3,7 +3,7 @@ import sys
 import pygame
 from src.components.button import Button
 from src.menus.option_menu import OptionenMenu
-from src.game.einstellungen import BILDSCHIRM_BREITE
+from src.utilities.einstellungen import BILDSCHIRM_BREITE
 from src.menus.hilfe_menu import HilfeMenu
 
 

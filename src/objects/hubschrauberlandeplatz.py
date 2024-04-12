@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from src.game.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
+from src.utilities.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
 
 
 class Hubschrauberlandeplatz(pygame.sprite.Sprite):

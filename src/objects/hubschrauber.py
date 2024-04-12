@@ -1,6 +1,6 @@
 import pygame
 
-from src.game.einstellungen import bild_laden
+from src.utilities.einstellungen import bild_laden
 
 
 class Hubschrauber(pygame.sprite.Sprite):

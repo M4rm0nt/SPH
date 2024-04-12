@@ -6,7 +6,7 @@ from src.objects.hubschrauberlandeplatz import Hubschrauberlandeplatz
 from src.objects.lager import Lager
 from src.objects.lkw import LKW
 from src.objects.tankstelle import Tankstelle
-from src.game.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
+from src.utilities.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
 
 
 class SpielZustand:
@@ -87,7 +87,7 @@ class SpielZustand:
                     f'Erz im LKW: {self.lkw.erz}',
                     f'Erz am Lager: {self.lager.erz}/{self.lager.kapazitaet}'
                 ]
-                self.zeige_infos(info_liste, 10, 10, separate_info=f'Erz gestohlen: {self.lkw.gestohlenes_erz}')
+                self.zeige_infos(info_liste, 20, separate_info=f'Erz gestohlen: {self.lkw.gestohlenes_erz}')
         else:
             self.zeige_endnachricht()
 
@@ -112,16 +112,24 @@ class SpielZustand:
         self.bildschirm.blit(text_surface, text_rect)
         pygame.display.flip()
 
-    def zeige_infos(self, infos, x, y, separate_info=None):
+    def zeige_infos(self, infos, y, separate_info=None):
         schrift_klein = pygame.font.SysFont("arial", 25)
+        bildschirm_breite = self.bildschirm.get_size()[0]
+
+        gesamt_breite = sum(schrift_klein.size(info)[0] + 10 for info in infos) - 10
+
+        x_start = (bildschirm_breite - gesamt_breite) // 2
+
         for info in infos:
             text_surf = schrift_klein.render(info, True, (0, 0, 0))
-            self.bildschirm.blit(text_surf, (x, y))
-            y += 30
+            text_rect = text_surf.get_rect(left=x_start, top=y)
+            self.bildschirm.blit(text_surf, text_rect)
+            x_start += text_surf.get_width() + 10
 
         if separate_info:
             text_surf = schrift_klein.render(separate_info, True, (255, 0, 0))
-            self.bildschirm.blit(text_surf, (x, y))
+            text_rect = text_surf.get_rect(midbottom=(bildschirm_breite // 2, self.bildschirm.get_size()[1] - 30))
+            self.bildschirm.blit(text_surf, text_rect)
 
     def zeichne_pause_nachricht(self):
         schrift_gross = pygame.font.SysFont("arial", 36)
