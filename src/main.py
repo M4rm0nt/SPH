@@ -1,14 +1,14 @@
 import sys
 import pygame
-from src.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
-from src.components.menu import HauptmenuZustand
+from src.game.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
+from src.menus.menu import HauptmenuZustand
 from src.utilities.config import SpielKonfiguration
 
 
 def main():
     pygame.init()
-    bildschirm = pygame.display.set_mode((BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE))
     pygame.display.set_caption("ErzCollector")
+    bildschirm = pygame.display.set_mode((BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE))
     uhr = pygame.time.Clock()
 
     konfiguration = SpielKonfiguration('utilities/config.ini')

@@ -1,6 +1,6 @@
 import pygame
 import sys
-from src.einstellungen import BILDSCHIRM_BREITE
+from src.game.einstellungen import BILDSCHIRM_BREITE
 
 
 class HilfeMenu:

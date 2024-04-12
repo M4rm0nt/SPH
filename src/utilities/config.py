@@ -1,10 +1,12 @@
 import configparser
 
+
 class SpielKonfiguration:
     def __init__(self, dateipfad):
+        self.config = None
+        self.dateipfad = dateipfad
         self.hubschrauber_geschwindigkeit = None
         self.lkw_geschwindigkeit = None
-        self.dateipfad = dateipfad
         self.laden()
 
     def laden(self):
@@ -12,7 +14,6 @@ class SpielKonfiguration:
         self.config.read(self.dateipfad)
 
         self.lkw_geschwindigkeit = float(self.config['LKW']['geschwindigkeit'])
-
         self.hubschrauber_geschwindigkeit = float(self.config['Hubschrauber']['geschwindigkeit'])
 
     def speichern(self):

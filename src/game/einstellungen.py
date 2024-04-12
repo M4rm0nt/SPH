@@ -7,7 +7,7 @@ BILDSCHIRM_BREITE = 800
 BILDSCHIRM_HOEHE = 600
 FPS = 60
 skript_verzeichnis = os.path.dirname(os.path.abspath(__file__))
-BILDER_VERZEICHNIS = os.path.join(skript_verzeichnis, "../assets/bilder")
+BILDER_VERZEICHNIS = os.path.join(skript_verzeichnis, "../../assets/bilder")
 pygame.init()
 
 

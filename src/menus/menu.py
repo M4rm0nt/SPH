@@ -2,9 +2,9 @@ import sys
 
 import pygame
 from src.components.button import Button
-from src.components.option_menu import OptionenMenu
-from src.einstellungen import BILDSCHIRM_BREITE
-from src.components.hilfe_menu import HilfeMenu
+from src.menus.option_menu import OptionenMenu
+from src.game.einstellungen import BILDSCHIRM_BREITE
+from src.menus.hilfe_menu import HilfeMenu
 
 
 class HauptmenuZustand:

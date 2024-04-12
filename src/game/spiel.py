@@ -1,7 +1,12 @@
 import pygame
 
-from src.components.spiel_objekte import LKW, Erzquelle, Lager, Tankstelle, Hubschrauberlandeplatz, Hubschrauber
-from src.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
+from src.objects.erzquelle import Erzquelle
+from src.objects.hubschrauber import Hubschrauber
+from src.objects.hubschrauberlandeplatz import Hubschrauberlandeplatz
+from src.objects.lager import Lager
+from src.objects.lkw import LKW
+from src.objects.tankstelle import Tankstelle
+from src.game.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE
 
 
 class SpielZustand:
@@ -46,7 +51,7 @@ class SpielZustand:
             for ereignis in ereignisse:
                 if ereignis.type == pygame.KEYDOWN:
                     if ereignis.key == pygame.K_ESCAPE:
-                        from src.components.menu import HauptmenuZustand
+                        from src.menus.menu import HauptmenuZustand
                         return HauptmenuZustand(self.bildschirm, self.uhr, self.konfiguration)
                     elif ereignis.key == pygame.K_p:
                         self.pause = not self.pause
