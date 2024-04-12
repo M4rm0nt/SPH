@@ -76,22 +76,14 @@ class SpielZustand:
 
     def zeichne_info_balken(self, titel, wert, max_wert, x, y, balken_breite, balken_hoehe, farbe, zeige_wert=True):
         schriftart = pygame.font.Font(None, 24)
-        # Zeichne den Hintergrund des Balkens
         balken_hintergrund = pygame.Rect(x, y, balken_breite, balken_hoehe)
         pygame.draw.rect(self.bildschirm, (200, 200, 200), balken_hintergrund)
-
-        # Berechne die Breite des Füllstands und verhindere Überlauf
         fuellstand_breite = max(0, min(wert / max_wert, 1)) * balken_breite
-
-        # Zeichne den Füllstand des Balkens
         fuellstand = pygame.Rect(x, y, fuellstand_breite, balken_hoehe)
         pygame.draw.rect(self.bildschirm, farbe, fuellstand)
-
-        # Zeichne den Titel auf dem Balken
         text_surf = schriftart.render(titel, True, (255, 255, 255))
-        self.bildschirm.blit(text_surf, (x + 5, y + 5))  # Etwas Abstand für den Titel
+        self.bildschirm.blit(text_surf, (x + 5, y + 5))
 
-        # Entscheide, ob der Wert angezeigt werden soll
         if zeige_wert:
             wert_text = schriftart.render(f'{wert}/{max_wert}', True, (255, 255, 255))
             wert_text_rect = wert_text.get_rect(center=(x + balken_breite - 50, y + balken_hoehe // 2))
@@ -101,7 +93,7 @@ class SpielZustand:
         self.bildschirm.fill((255, 255, 255))
         self.alle_sprites.draw(self.bildschirm)
 
-        gesamt_balken_anzahl = 4  # Anzahl der Balken
+        gesamt_balken_anzahl = 4
         balken_breite = self.bildschirm.get_width() // gesamt_balken_anzahl
         balken_hoehe = 30
         y_position = 0
@@ -110,22 +102,17 @@ class SpielZustand:
             if self.pause:
                 self.zeichne_pause_nachricht()
             else:
-                # Zeichne alle Balken nebeneinander am oberen Bildschirmrand
-                self.zeichne_info_balken('Sprit', self.lkw.kraftstoff, 100, 0 * balken_breite, y_position,
-                                         balken_breite, balken_hoehe, (255, 0, 0), zeige_wert=False)
-                self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 1 * balken_breite, y_position, balken_breite,
-                                         balken_hoehe, (0, 255, 0))
-                self.zeichne_info_balken('Erz am Lager', self.lager.erz, 1000, 2 * balken_breite, y_position,
-                                         balken_breite, balken_hoehe, (0, 0, 255))
-                self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 250, 3 * balken_breite,
-                                         y_position, balken_breite, balken_hoehe, (255, 255, 0))
+                self.zeichne_info_balken('Kraftstoff', self.lkw.kraftstoff, 100, 0 * balken_breite, y_position, balken_breite, balken_hoehe, (255, 0, 0), zeige_wert=False)
+                self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 1 * balken_breite, y_position, balken_breite, balken_hoehe, (0, 255, 0))
+                self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 200, 2 * balken_breite, y_position, balken_breite, balken_hoehe, (255, 255, 0))
+                self.zeichne_info_balken('Erz im Lager', self.lager.erz, 1000, 3 * balken_breite, y_position, balken_breite, balken_hoehe, (0, 0, 255))
         else:
             self.zeige_endnachricht()
 
         pygame.display.flip()
 
     def ueberpruefe_spielende(self):
-        if self.lkw.kraftstoff <= 0 or self.hubschrauber.abgeladenes_erz > 200:
+        if self.lkw.kraftstoff <= 0 or self.hubschrauber.abgeladenes_erz == 200:
             self.endnachricht = "Verloren. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
         elif self.lager.erz > 800:
