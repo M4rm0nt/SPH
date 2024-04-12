@@ -1,9 +1,12 @@
 import os
 import sys
 import pygame
-from src.utilities.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
-from src.menus.menu import HauptmenuZustand
-from src.utilities.config import SpielKonfiguration
+from utilities.einstellungen import BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, FPS
+from menus.menu import HauptmenuZustand
+from utilities.config import SpielKonfiguration
+
+# Fügt das übergeordnete Verzeichnis von `src` zum Pfad hinzu
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def main():
     # Einstellung des Arbeitsverzeichnisses auf das Verzeichnis, in dem sich main.py befindet
