@@ -6,14 +6,16 @@ from src.utilities.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIR
 class LKW(pygame.sprite.Sprite):
     def __init__(self, geschwindigkeit):
         super().__init__()
-        self.image = bild_laden('lastwagen')
-        self.rect = self.image.get_rect(center=(BILDSCHIRM_BREITE // 2, BILDSCHIRM_HOEHE - 50))
+        self.lkw_image = bild_laden('lastwagen')
+        self.image = self.lkw_image
+        self.rect = self.lkw_image.get_rect(center=(BILDSCHIRM_BREITE // 2, BILDSCHIRM_HOEHE - 50))
         self.hitbox = pygame.Rect(self.rect.left + 10, self.rect.top + 10, self.rect.width - 20, self.rect.height - 20)
         self.geschwindigkeit = geschwindigkeit
         self.kraftstoff = 100
         self.erz = 0
         self.max_erz = 50
         self.gestohlenes_erz = 0
+        self.ausrichtung = "rechts"
 
     def update(self, tasten, erz_quelle, lager, tankstelle, hubschrauber_gruppe):
         self.bewegen(tasten)
@@ -21,17 +23,35 @@ class LKW(pygame.sprite.Sprite):
         self.kollision_pruefen(erz_quelle, lager, tankstelle, hubschrauber_gruppe)
 
     def bewegen(self, tasten):
+        richtung_geaendert = False
         if tasten[Tasten.LINKS.value] or tasten[Tasten.A.value]:
             self.rect.x -= self.geschwindigkeit
+            if self.ausrichtung != "links":
+                self.ausrichtung = "links"
+                richtung_geaendert = True
         if tasten[Tasten.RECHTS.value] or tasten[Tasten.D.value]:
             self.rect.x += self.geschwindigkeit
+            if self.ausrichtung != "rechts":
+                self.ausrichtung = "rechts"
+                richtung_geaendert = True
         if tasten[Tasten.OBEN.value] or tasten[Tasten.W.value]:
             self.rect.y -= self.geschwindigkeit
         if tasten[Tasten.UNTEN.value] or tasten[Tasten.S.value]:
             self.rect.y += self.geschwindigkeit
+
+        if richtung_geaendert:
+            self.drehen()
+
         self.rect.x = max(0, min(BILDSCHIRM_BREITE - self.rect.width, self.rect.x))
         self.rect.y = max(0, min(BILDSCHIRM_HOEHE - self.rect.height, self.rect.y))
         self.hitbox.center = self.rect.center
+
+    def drehen(self):
+        if self.ausrichtung == "rechts":
+            self.image = pygame.transform.flip(self.lkw_image, False, False)
+        elif self.ausrichtung == "links":
+            self.image = pygame.transform.flip(self.lkw_image, True, False)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
     def kraftstoff_verbrauchen(self, tasten):
         if any(tasten[key.value] for key in [Tasten.LINKS, Tasten.RECHTS, Tasten.OBEN, Tasten.UNTEN, Tasten.W, Tasten.A, Tasten.S, Tasten.D]):

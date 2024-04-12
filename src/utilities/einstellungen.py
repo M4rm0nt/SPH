@@ -21,6 +21,11 @@ WEISS = (255, 255, 255)
 SCHWARZ = (0, 0, 0)
 ROT = (255, 0, 0)
 
+BUTTON_WIDTH = 200
+BUTTON_HEIGHT = 50
+BUTTON_SPACING = 60
+START_Y = 100
+
 
 class Tasten(Enum):
     LINKS = pygame.K_LEFT

@@ -64,7 +64,7 @@ class OptionenMenu:
                                265)
             self.text_zeichnen(f"Hubschrauber-Geschwindigkeit: {self.konfiguration.hubschrauber_geschwindigkeit}",
                                BILDSCHIRM_BREITE // 2, 365)
-            self.text_zeichnen("Schwierig: LKW: 5.5 / 3.5 | Normal: LKW: 5.5 / 3.5 | Einfach: LKW: 5.5 / 3.5", BILDSCHIRM_BREITE // 2, 475)
+            self.text_zeichnen("Schwierig: LKW: 5.5 / 3.5 | Normal: LKW: 5.5 / 3.0 | Einfach: LKW: 5.5 / 2.5", BILDSCHIRM_BREITE // 2, 475)
 
 
             self.button_zeichnen(lkw_increment_button, "+", maus_pos)

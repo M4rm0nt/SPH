@@ -1,27 +1,29 @@
 import sys
-
 import pygame
 from src.components.button import Button
 from src.menus.option_menu import OptionenMenu
-from src.utilities.einstellungen import BILDSCHIRM_BREITE
+from src.utilities.einstellungen import BILDSCHIRM_BREITE, BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_SPACING, START_Y
 from src.menus.hilfe_menu import HilfeMenu
 
 
 class HauptmenuZustand:
     def __init__(self, bildschirm, uhr, konfiguration):
+        self.buttons = None
         self.bildschirm = bildschirm
         self.uhr = uhr
+        self.konfiguration = konfiguration
         self.schrift_titel = pygame.font.Font(None, 48)
         self.titel_text = "Hauptmenü"
         self.titel_farbe = (0, 0, 0)
-        self.buttons = [
-            Button("Spielen", (BILDSCHIRM_BREITE - 200) // 2, 100, 200, 50, self.spielen),
-            Button("Optionen", (BILDSCHIRM_BREITE - 200) // 2, 160, 200, 50, self.optionen),
-            Button("Hilfe", (BILDSCHIRM_BREITE - 200) // 2, 220, 200, 50, self.hilfe),
-            Button("Beenden", (BILDSCHIRM_BREITE - 200) // 2, 280, 200, 50, self.beenden)
-        ]
-        self.konfiguration = konfiguration
+        self.init_buttons()
         self.aktuelle_auswahl = 0
+
+    def init_buttons(self):
+        button_titles = ["Spielen", "Optionen", "Hilfe", "Beenden"]
+        self.buttons = [
+            Button(title, (BILDSCHIRM_BREITE - BUTTON_WIDTH) // 2, START_Y + i * BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT, getattr(self, title.lower()))
+            for i, title in enumerate(button_titles)
+        ]
 
     def spielen(self):
         from src.game.spiel import SpielZustand
