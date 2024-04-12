@@ -1,44 +1,54 @@
 import pygame
 from src.utilities.einstellungen import bild_laden
 
-
 class Hubschrauber(pygame.sprite.Sprite):
     def __init__(self, lkw, hubschrauberlandeplatz, geschwindigkeit):
         super().__init__()
         self.original_image = bild_laden('hubschrauber')
         self.image = self.original_image
         self.rect = self.image.get_rect(center=hubschrauberlandeplatz.rect.center)
-        self.rect.inflate_ip(-self.rect.width * 0.5, -self.rect.height * 0.5)
         self.geschwindigkeit = geschwindigkeit
         self.lkw = lkw
         self.hubschrauberlandeplatz = hubschrauberlandeplatz
-        self.reset_required = False
+        self.erz_gestohlen = False
+        self.gestohlenes_erz = 0
         self.ausrichtung = "rechts"
 
     def update(self):
-        if self.reset_required:
-            self.zuruecksetzen_zu_hubschrauberlandeplatz()
+        if self.erz_gestohlen:
+            self.zum_hubschrauberlandeplatz_fliegen()
         else:
             self.lkw_verfolgen()
 
     def lkw_verfolgen(self):
-        if self.lkw.rect.centerx < self.rect.centerx:
-            self.rect.x -= self.geschwindigkeit
-            neue_ausrichtung = "links"
-        elif self.lkw.rect.centerx > self.rect.centerx:
-            self.rect.x += self.geschwindigkeit
-            neue_ausrichtung = "rechts"
-        else:
-            neue_ausrichtung = self.ausrichtung
+        if self.rect.colliderect(self.lkw.rect) and self.lkw.erz_geladen():
+            self.gestohlenes_erz += self.lkw.erz
+            self.lkw.erz = 0
+            self.erz_gestohlen = True
 
+        self.bewegen_zu(self.lkw.rect.centerx, self.lkw.rect.centery)
+
+    def zum_hubschrauberlandeplatz_fliegen(self):
+        if self.rect.center == self.hubschrauberlandeplatz.rect.center:
+            self.erz_abladen()
+            return
+        self.bewegen_zu(self.hubschrauberlandeplatz.rect.centerx, self.hubschrauberlandeplatz.rect.centery)
+
+    def erz_abladen(self):
+        self.erz_gestohlen = False
+
+    def bewegen_zu(self, ziel_x, ziel_y):
+        dx = ziel_x - self.rect.centerx
+        dy = ziel_y - self.rect.centery
+        if dx != 0:
+            self.rect.x += self.geschwindigkeit if dx > 0 else -self.geschwindigkeit
+        if dy != 0:
+            self.rect.y += self.geschwindigkeit if dy > 0 else -self.geschwindigkeit
+
+        neue_ausrichtung = "rechts" if dx > 0 else "links"
         if neue_ausrichtung != self.ausrichtung:
             self.ausrichtung = neue_ausrichtung
             self.spiegeln()
-
-        if self.lkw.rect.centery < self.rect.centery:
-            self.rect.y -= self.geschwindigkeit
-        elif self.lkw.rect.centery > self.rect.centery:
-            self.rect.y += self.geschwindigkeit
 
     def spiegeln(self):
         if self.ausrichtung == "rechts":
@@ -46,7 +56,3 @@ class Hubschrauber(pygame.sprite.Sprite):
         elif self.ausrichtung == "links":
             self.image = pygame.transform.flip(self.original_image, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
-
-    def zuruecksetzen_zu_hubschrauberlandeplatz(self):
-        self.rect.center = self.hubschrauberlandeplatz.rect.center
-        self.reset_required = False

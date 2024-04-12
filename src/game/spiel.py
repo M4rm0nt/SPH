@@ -87,20 +87,20 @@ class SpielZustand:
                     f'Erz im LKW: {self.lkw.erz}',
                     f'Erz am Lager: {self.lager.erz}/{self.lager.kapazitaet}'
                 ]
-                self.zeige_infos(info_liste, 20, separate_info=f'Erz gestohlen: {self.lkw.gestohlenes_erz}')
+                self.zeige_infos(info_liste, 20, separate_info=f'Erz gestohlen: {self.hubschrauber.gestohlenes_erz}')
         else:
             self.zeige_endnachricht()
 
         pygame.display.flip()
 
     def ueberpruefe_spielende(self):
-        if self.lkw.kraftstoff <= 0 or self.lkw.gestohlenes_erz > 200:
+        if self.lkw.kraftstoff <= 0 or self.hubschrauber.gestohlenes_erz > 200:
             self.endnachricht = "Verloren. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
         elif self.lager.erz > 800:
             self.endnachricht = "Gewonnen. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
-        elif self.lager.erz == 800 and self.lkw.gestohlenes_erz == 200:
+        elif self.lager.erz == 800 and self.hubschrauber.gestohlenes_erz == 200:
             self.endnachricht = "Unentschieden. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
 

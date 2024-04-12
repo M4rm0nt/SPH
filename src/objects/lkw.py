@@ -1,7 +1,5 @@
 import pygame
-
 from src.utilities.einstellungen import bild_laden, BILDSCHIRM_BREITE, BILDSCHIRM_HOEHE, Tasten
-
 
 class LKW(pygame.sprite.Sprite):
     def __init__(self, geschwindigkeit):
@@ -14,7 +12,6 @@ class LKW(pygame.sprite.Sprite):
         self.kraftstoff = 100
         self.erz = 0
         self.max_erz = 50
-        self.gestohlenes_erz = 0
         self.ausrichtung = "rechts"
 
     def update(self, tasten, erz_quelle, lager, tankstelle, hubschrauber_gruppe):
@@ -62,9 +59,8 @@ class LKW(pygame.sprite.Sprite):
     def kollision_pruefen(self, erz_quelle, lager, tankstelle, hubschrauber_gruppe):
         kollidierter_hubschrauber = pygame.sprite.spritecollideany(self, hubschrauber_gruppe, collided=lambda s1, s2: s1.hitbox.colliderect(s2.rect))
         if kollidierter_hubschrauber and self.erz > 0:
-            self.gestohlenes_erz += self.erz
             self.erz = 0
-            kollidierter_hubschrauber.reset_required = True
+            kollidierter_hubschrauber.erz_gestohlen = True
         if self.hitbox.colliderect(erz_quelle.rect):
             self.erz_sammeln(erz_quelle)
         if self.hitbox.colliderect(lager.rect):
@@ -81,3 +77,5 @@ class LKW(pygame.sprite.Sprite):
             if self.erz == self.max_erz:
                 erz_quelle.neupositionieren()
 
+    def erz_geladen(self):
+        return self.erz > 0
