@@ -2,7 +2,6 @@ import os
 import sys
 import pygame
 
-from src.menus.menu_main import HauptmenuZustand
 from src.einstellungen.konfiguration import SpielKonfiguration
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -23,6 +22,7 @@ def main():
 
     konfiguration_pfad = os.path.join(os.path.dirname(__file__), 'src/einstellungen', 'konfiguration.ini')
     konfiguration = SpielKonfiguration(konfiguration_pfad)
+    from src.menus.menu_main import HauptmenuZustand
     zustand = HauptmenuZustand(bildschirm, uhr, konfiguration)
 
     while True:
@@ -32,16 +32,14 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+        from src.spiel.spiel import SpielZustand
         neuer_zustand = zustand.verarbeite_ereignisse(ereignisse)
-        if neuer_zustand == "QUIT":
-            pygame.quit()
-            sys.exit()
-        elif neuer_zustand != zustand:
-            zustand = neuer_zustand
+        if isinstance(neuer_zustand, SpielZustand) or isinstance(neuer_zustand, HauptmenuZustand):
+            if neuer_zustand != zustand:
+                zustand = neuer_zustand
 
         zustand.aktualisiere()
         zustand.zeichne()
-
         pygame.display.flip()
         uhr.tick(60)
 

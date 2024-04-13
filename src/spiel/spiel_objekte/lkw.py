@@ -16,7 +16,7 @@ class LKW(pygame.sprite.Sprite):
 
     def update(self, tasten, erz_quelle, lager, tankstelle, hubschrauber_gruppe):
         self.bewegen(tasten)
-        self.kraftstoff_verbrauchen()
+        self.kraftstoff_verbrauchen(tasten)
         self.kollision_pruefen(erz_quelle, lager, tankstelle, hubschrauber_gruppe)
 
     def bewegen(self, tasten):
@@ -50,8 +50,8 @@ class LKW(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(self.lkw_image, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    def kraftstoff_verbrauchen(self):
-        if any([pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN]):
+    def kraftstoff_verbrauchen(self, tasten):
+        if any(tasten[key] for key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN)):
             self.kraftstoff -= 0.15
             if self.kraftstoff <= 0:
                 self.kill()

@@ -33,23 +33,29 @@ class Hubschrauber(pygame.sprite.Sprite):
     def zum_hubschrauberlandeplatz_fliegen(self):
         if self.rect.center == self.hubschrauberlandeplatz.rect.center:
             self.erz_abladen()
-            return
-        self.bewegen_zu(self.hubschrauberlandeplatz.rect.centerx, self.hubschrauberlandeplatz.rect.centery)
+        else:
+            self.bewegen_zu(self.hubschrauberlandeplatz.rect.centerx, self.hubschrauberlandeplatz.rect.centery)
 
     def erz_abladen(self):
         self.abgeladenes_erz += self.gestohlenes_erz
         self.gestohlenes_erz = 0
         self.erz_gestohlen = False
 
-    def bewegen_zu(self, hubschrauberlandeplatz_mitte_x, hubschrauberlandeplatz_mitte_y):
-        ziel_x = hubschrauberlandeplatz_mitte_x - self.rect.centerx
-        ziel_y = hubschrauberlandeplatz_mitte_y - self.rect.centery
-        if ziel_x != 0:
-            self.rect.x += self.geschwindigkeit if ziel_x > 0 else -self.geschwindigkeit
-        if ziel_y != 0:
-            self.rect.y += self.geschwindigkeit if ziel_y > 0 else -self.geschwindigkeit
+    def bewegen_zu(self, ziel_x, ziel_y):
+        dx = ziel_x - self.rect.centerx
+        dy = ziel_y - self.rect.centery
+        distanz = (dx ** 2 + dy ** 2) ** 0.5
 
-        neue_ausrichtung = "rechts" if ziel_x > 0 else "links"
+        if distanz < self.geschwindigkeit or distanz == 0:
+            self.rect.center = (
+            ziel_x, ziel_y)
+        else:
+            schritt_x = dx / distanz * self.geschwindigkeit
+            schritt_y = dy / distanz * self.geschwindigkeit
+            self.rect.x += int(schritt_x)
+            self.rect.y += int(schritt_y)
+
+        neue_ausrichtung = "rechts" if dx > 0 else "links"
         if neue_ausrichtung != self.ausrichtung:
             self.ausrichtung = neue_ausrichtung
             self.spiegeln()

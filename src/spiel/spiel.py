@@ -9,10 +9,11 @@ from src.spiel.spiel_objekte.tankstelle import Tankstelle
 
 
 class SpielZustand:
-    def __init__(self, bildschirm, uhr, konfiguration):
-        self.konfiguration = konfiguration
+    def __init__(self, bildschirm, uhr, konfiguration, gespeicherter_zustand=None):
         self.bildschirm = bildschirm
         self.uhr = uhr
+        self.konfiguration = konfiguration
+        self.gespeicherter_zustand = None
         self.pause = False
         self.endnachricht = ""
         self.spiel_laeuft = True
@@ -24,9 +25,45 @@ class SpielZustand:
         self.erz_quelle = None
         self.alle_sprites = None
         self.hubschrauber_gruppe = None
-        self.initialisiere_spiel()
+        if gespeicherter_zustand:
+            self.lade_zustand(gespeicherter_zustand)
+        else:
+            self.initialisiere_spiel()
+
+    def speichern_zustand(self):
+        self.gespeicherter_zustand = {
+            'lkw': self.lkw,
+            'hubschrauberlandeplatz': self.hubschrauberlandeplatz,
+            'hubschrauber': self.hubschrauber,
+            'tankstelle': self.tankstelle,
+            'lager': self.lager,
+            'erz_quelle': self.erz_quelle
+        }
+        print("Spielzustand gespeichert:", self.gespeicherter_zustand)
+        return self.gespeicherter_zustand
+
+    def lade_zustand(self, zustand):
+        self.konfiguration.lade_konfiguration()
+        self.lkw = zustand['lkw']
+        self.hubschrauberlandeplatz = zustand['hubschrauberlandeplatz']
+        self.hubschrauber = zustand['hubschrauber']
+        self.tankstelle = zustand['tankstelle']
+        self.lager = zustand['lager']
+        self.erz_quelle = zustand['erz_quelle']
+        self.lkw.geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
+        self.hubschrauber.geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
+
+
+        self.alle_sprites = pygame.sprite.Group()
+        self.hubschrauber_gruppe = pygame.sprite.Group()
+        self.alle_sprites.add(self.lkw, self.erz_quelle, self.lager, self.tankstelle, self.hubschrauberlandeplatz,
+                              self.hubschrauber)
+        self.hubschrauber_gruppe.add(self.hubschrauber)
+
+        self.hubschrauber_gruppe.add(self.hubschrauber)
 
     def initialisiere_spiel(self):
+        self.konfiguration.lade_konfiguration()
         lkw_geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
         hubschrauber_geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
 
@@ -46,24 +83,21 @@ class SpielZustand:
         self.hubschrauber_gruppe.add(self.hubschrauber)
 
     def verarbeite_ereignisse(self, ereignisse):
-        if self.spiel_laeuft:
-            for ereignis in ereignisse:
-                if ereignis.type == pygame.KEYDOWN:
+        for ereignis in ereignisse:
+            if ereignis.type == pygame.KEYDOWN:
+                if self.spiel_laeuft:
                     if ereignis.key == pygame.K_ESCAPE:
+                        gespeicherter_zustand = self.speichern_zustand()
                         from src.menus.menu_main import HauptmenuZustand
-                        return HauptmenuZustand(self.bildschirm, self.uhr, self.konfiguration)
+                        return HauptmenuZustand(self.bildschirm, self.uhr, self.konfiguration, gespeicherter_zustand)
                     elif ereignis.key == pygame.K_p:
                         self.pause = not self.pause
-        else:
-            for ereignis in ereignisse:
-                if ereignis.type == pygame.KEYDOWN:
+                else:
                     if ereignis.key == pygame.K_j:
                         self.initialisiere_spiel()
                         self.spiel_laeuft = True
                     elif ereignis.key == pygame.K_n:
                         return "QUIT"
-                elif ereignis.type == pygame.QUIT:
-                    return "QUIT"
         return self
 
     def aktualisiere(self):

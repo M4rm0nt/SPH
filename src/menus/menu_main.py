@@ -6,14 +6,15 @@ from src.menus.menu_hilfe import HilfeMenu
 
 
 class HauptmenuZustand:
-    def __init__(self, bildschirm, uhr, konfiguration):
-        self.buttons = None
+    def __init__(self, bildschirm, uhr, konfiguration, gespeichertes_spiel=None):
         self.bildschirm = bildschirm
         self.uhr = uhr
         self.konfiguration = konfiguration
+        self.gespeichertes_spiel = gespeichertes_spiel
         self.schrift_titel = pygame.font.Font(None, 48)
         self.titel_text = "Hauptmenü"
         self.titel_farbe = (0, 0, 0)
+        self.buttons = None
         self.init_buttons()
         self.aktuelle_auswahl = 0
 
@@ -25,8 +26,12 @@ class HauptmenuZustand:
         ]
 
     def spielen(self):
-        from src.spiel.spiel import SpielZustand
-        return SpielZustand(self.bildschirm, self.uhr, self.konfiguration)
+        from src.spiel.spiel import SpielZustand  # Verlagere diesen Import hierher
+        self.konfiguration.lade_konfiguration()
+        if self.gespeichertes_spiel:
+            return SpielZustand(self.bildschirm, self.uhr, self.konfiguration, self.gespeichertes_spiel)
+        else:
+            return SpielZustand(self.bildschirm, self.uhr, self.konfiguration)
 
     def optionen(self):
         optionen_menu = OptionenMenu(self.bildschirm, self.uhr, self.konfiguration)
@@ -51,6 +56,9 @@ class HauptmenuZustand:
                     result = self.buttons[self.aktuelle_auswahl].aktion()
                     if result:
                         return result
+                elif ereignis.key == pygame.K_ESCAPE:
+                    from src.spiel.spiel import SpielZustand
+                    return SpielZustand(self.bildschirm, self.uhr, self.konfiguration, self.gespeichertes_spiel)
             elif ereignis.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(self.buttons):
                     if button.rechteck.collidepoint(ereignis.pos):

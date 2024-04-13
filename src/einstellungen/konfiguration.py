@@ -7,9 +7,9 @@ class SpielKonfiguration:
         self.dateipfad = dateipfad
         self.hubschrauber_geschwindigkeit = None
         self.lkw_geschwindigkeit = None
-        self.laden()
+        self.lade_konfiguration()
 
-    def laden(self):
+    def lade_konfiguration(self):
         self.config = configparser.ConfigParser()
         self.config.read(self.dateipfad)
 
