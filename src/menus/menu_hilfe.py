@@ -27,7 +27,7 @@ class HilfeMenu:
             self.bildschirm.fill((255, 255, 255))
             self.text_zeichnen("Hilfe-Menü - Drücke ESC, um zurückzukehren", 400, 100)
             self.text_zeichnen("Steuerung", 400, 150)
-            self.text_zeichnen("W-A-S-D oder Pfeiltasten zum steuern des LKW", 400, 175)
+            self.text_zeichnen("feiltasten zum steuern des LKW", 400, 175)
             self.text_zeichnen("Ziel:", 400, 225)
             self.text_zeichnen("Bringe das Erz zum Ablageort", 400, 250)
             self.text_zeichnen("Achte auf den Hellikopter!", 400, 275)

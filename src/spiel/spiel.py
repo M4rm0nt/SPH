@@ -115,11 +115,11 @@ class SpielZustand:
         fuellstand_breite = max(0, min(wert / max_wert, 1)) * balken_breite
         fuellstand = pygame.Rect(x, y, fuellstand_breite, balken_hoehe)
         pygame.draw.rect(self.bildschirm, farbe, fuellstand)
-        text_surf = schriftart.render(titel, True, (255, 255, 255))
+        text_surf = schriftart.render(titel, True, (0, 0, 0))
         self.bildschirm.blit(text_surf, (x + 5, y + 5))
 
         if zeige_wert:
-            wert_text = schriftart.render(f'{wert}/{max_wert}', True, (255, 255, 255))
+            wert_text = schriftart.render(f'{wert}/{max_wert}', True, (0, 0, 0))
             wert_text_rect = wert_text.get_rect(center=(x + balken_breite - 50, y + balken_hoehe // 2))
             self.bildschirm.blit(wert_text, wert_text_rect)
 
@@ -127,8 +127,7 @@ class SpielZustand:
         self.bildschirm.fill((255, 255, 255))
         self.alle_sprites.draw(self.bildschirm)
 
-        gesamt_balken_anzahl = 4
-        balken_breite = self.bildschirm.get_width() // gesamt_balken_anzahl
+        balken_breite = self.bildschirm.get_width() // 4
         balken_hoehe = 30
         y_position = 0
 
