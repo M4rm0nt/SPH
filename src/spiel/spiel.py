@@ -39,7 +39,6 @@ class SpielZustand:
             'lager': self.lager,
             'erz_quelle': self.erz_quelle
         }
-        print("Spielzustand gespeichert:", self.gespeicherter_zustand)
         return self.gespeicherter_zustand
 
     def lade_zustand(self, zustand):
@@ -92,11 +91,13 @@ class SpielZustand:
                         return HauptmenuZustand(self.bildschirm, self.uhr, self.konfiguration, gespeicherter_zustand)
                     elif ereignis.key == pygame.K_p:
                         self.pause = not self.pause
-                else:
-                    if ereignis.key == pygame.K_j:
+                if ereignis.key == pygame.K_j:
+                    if not self.spiel_laeuft:
                         self.initialisiere_spiel()
                         self.spiel_laeuft = True
-                    elif ereignis.key == pygame.K_n:
+                        return self
+                elif ereignis.key == pygame.K_n:
+                    if not self.spiel_laeuft:
                         return "QUIT"
         return self
 
@@ -148,7 +149,7 @@ class SpielZustand:
         if self.lkw.kraftstoff <= 0 or self.hubschrauber.abgeladenes_erz == 200:
             self.endnachricht = "Verloren. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
-        elif self.lager.erz > 800:
+        elif self.lager.erz == 800:
             self.endnachricht = "Gewonnen. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
 
