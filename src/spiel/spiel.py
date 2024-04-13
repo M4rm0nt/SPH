@@ -132,16 +132,19 @@ class SpielZustand:
 
         balken_breite = self.bildschirm.get_width() // 4
         balken_hoehe = 30
-        y_position = 0
+        y_position_oben = 0
+        y_position_unten = self.bildschirm.get_height() - balken_hoehe  # Position für den Kraftstoffbalken unten
 
         if self.spiel_laeuft:
             if self.pause:
                 self.zeichne_pause_nachricht()
             else:
-                self.zeichne_info_balken('Kraftstoff', self.lkw.kraftstoff, 100, 0 * balken_breite, y_position, balken_breite, balken_hoehe, (255, 0, 0), zeige_wert=False)
-                self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 1 * balken_breite, y_position, balken_breite, balken_hoehe, (0, 255, 0))
-                self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 200, 2 * balken_breite, y_position, balken_breite, balken_hoehe, (255, 255, 0))
-                self.zeichne_info_balken('Erz im Lager', self.lager.erz, 1000, 3 * balken_breite, y_position, balken_breite, balken_hoehe, (0, 0, 255))
+                self.zeichne_info_balken('Kraftstoff', self.lkw.kraftstoff, 100, 0, y_position_unten, balken_breite, balken_hoehe, (255, 0, 0), zeige_wert=False)
+
+                self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 0 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (0, 255, 0))
+                self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 200, 1 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (255, 255, 0))
+                self.zeichne_info_balken('Erz im Lager', self.lager.erz, 800, 2 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (0, 0, 255))
+                self.zeichne_info_balken('Erzquelle', self.erz_quelle.erz_menge, 1000, 3 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (255, 0, 255))
         else:
             self.zeige_endnachricht()
 
