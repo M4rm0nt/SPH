@@ -3,6 +3,7 @@ import pygame
 from src.menus.menu_objekte.menu_button import Button
 from src.menus.menu_options import OptionenMenu
 from src.menus.menu_hilfe import HilfeMenu
+from src.spiel.spiel import SpielZustand
 
 
 class HauptmenuZustand:
@@ -19,19 +20,26 @@ class HauptmenuZustand:
         self.aktuelle_auswahl = 0
 
     def init_buttons(self):
-        button_titles = ["Spielen", "Optionen", "Hilfe", "Beenden"]
+        button_titles = ["Optionen", "Hilfe", "Beenden"]
+        if self.gespeichertes_spiel:
+            button_titles.insert(0, "Weiter spielen")
+            button_titles.insert(1, "Neues Spiel")
+        else:
+            button_titles.insert(0, "Spielen")
+
         self.buttons = [
-            Button(title, 300, 100 + i * 60, 200, 50, getattr(self, title.lower()), self.schrift_titel.get_height())
+            Button(title, 300, 100 + i * 60, 200, 50, getattr(self, title.replace(" ", "_").lower()), self.schrift_titel.get_height())
             for i, title in enumerate(button_titles)
         ]
 
+    def weiter_spielen(self):
+        return SpielZustand(self.bildschirm, self.uhr, self.konfiguration, self.gespeichertes_spiel)
+
+    def neues_spiel(self):
+        return SpielZustand(self.bildschirm, self.uhr, self.konfiguration)
+
     def spielen(self):
-        from src.spiel.spiel import SpielZustand  # Verlagere diesen Import hierher
-        self.konfiguration.lade_konfiguration()
-        if self.gespeichertes_spiel:
-            return SpielZustand(self.bildschirm, self.uhr, self.konfiguration, self.gespeichertes_spiel)
-        else:
-            return SpielZustand(self.bildschirm, self.uhr, self.konfiguration)
+        return self.neues_spiel() if not self.gespeichertes_spiel else self.weiter_spielen()
 
     def optionen(self):
         optionen_menu = OptionenMenu(self.bildschirm, self.uhr, self.konfiguration)
@@ -56,9 +64,6 @@ class HauptmenuZustand:
                     result = self.buttons[self.aktuelle_auswahl].aktion()
                     if result:
                         return result
-                elif ereignis.key == pygame.K_ESCAPE:
-                    from src.spiel.spiel import SpielZustand
-                    return SpielZustand(self.bildschirm, self.uhr, self.konfiguration, self.gespeichertes_spiel)
             elif ereignis.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(self.buttons):
                     if button.rechteck.collidepoint(ereignis.pos):
