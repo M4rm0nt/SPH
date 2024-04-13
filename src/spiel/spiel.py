@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 from src.spiel.spiel_objekte.erzquelle import Erzquelle
@@ -98,7 +100,8 @@ class SpielZustand:
                         return self
                 elif ereignis.key == pygame.K_n:
                     if not self.spiel_laeuft:
-                        return "QUIT"
+                        pygame.quit()
+                        sys.exit()
         return self
 
     def aktualisiere(self):

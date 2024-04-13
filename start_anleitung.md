@@ -10,7 +10,7 @@ Navigiere zum Spielordner:
 
 Im Terminal navigierst du zum Verzeichnis, in dem sich dein Spiel befindet, indem du den Befehl cd (Change Directory) verwendest. Basierend auf deinem Beispiel würde der Befehl so aussehen:
 
-cd ~/dev/python/netcat/ErzCollector
+cd ~/ErzCollector
 Stelle sicher, dass du den Pfad entsprechend deiner Verzeichnisstruktur anpasst.
 Aktiviere die virtuelle Umgebung (optional):
 
