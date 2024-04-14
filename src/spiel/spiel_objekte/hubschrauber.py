@@ -47,20 +47,15 @@ class Hubschrauber(pygame.sprite.Sprite):
         distanz = (hubschrauber_x ** 2 + hubschrauber_y ** 2) ** 0.5
 
         if distanz < self.geschwindigkeit or distanz == 0:
-            self.rect.center = (lkw_x, lkw_y)
+            self.rect.center = (
+                lkw_x, lkw_y)
         else:
             schritt_x = hubschrauber_x / distanz * self.geschwindigkeit
             schritt_y = hubschrauber_y / distanz * self.geschwindigkeit
             self.rect.x += int(schritt_x)
             self.rect.y += int(schritt_y)
 
-        if hubschrauber_x > 0 and abs(hubschrauber_x) > abs(hubschrauber_y):
-            neue_ausrichtung = "rechts"
-        elif hubschrauber_x < 0 and abs(hubschrauber_x) > abs(hubschrauber_y):
-            neue_ausrichtung = "links"
-        else:
-            neue_ausrichtung = self.ausrichtung
-
+        neue_ausrichtung = "rechts" if hubschrauber_x > 0 else "links"
         if neue_ausrichtung != self.ausrichtung:
             self.ausrichtung = neue_ausrichtung
             self.spiegeln()

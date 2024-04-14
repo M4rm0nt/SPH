@@ -22,40 +22,41 @@ class LKW(pygame.sprite.Sprite):
         self.kollision_pruefen(erz_quelle, lager, tankstelle, hubschrauber_gruppe)
 
     def bewegen(self, tasten):
-        dx = 0
-        dy = 0
+        lkw_x = 0
+        lkw_y = 0
         richtung_geaendert = False
 
         if tasten[pygame.K_LEFT]:
-            dx -= self.geschwindigkeit
+            lkw_x -= self.geschwindigkeit
             if self.ausrichtung != "links":
                 self.ausrichtung = "links"
                 richtung_geaendert = True
         if tasten[pygame.K_RIGHT]:
-            dx += self.geschwindigkeit
+            lkw_x += self.geschwindigkeit
             if self.ausrichtung != "rechts":
                 self.ausrichtung = "rechts"
                 richtung_geaendert = True
         if tasten[pygame.K_UP]:
-            dy -= self.geschwindigkeit
+            lkw_y -= self.geschwindigkeit
         if tasten[pygame.K_DOWN]:
-            dy += self.geschwindigkeit
+            lkw_y += self.geschwindigkeit
 
-        if dx != 0 and dy != 0:
-            dx /= sqrt(2)
-            dy /= sqrt(2)
+        if lkw_x != 0 and lkw_y != 0:
+            norm = sqrt(2)
+            lkw_x /= norm
+            lkw_y /= norm
 
-        self.rect.x += int(dx)
-        self.rect.y += int(dy)
+        self.rect.x += int(lkw_x)
+        self.rect.y += int(lkw_y)
 
         self.rect.x = max(0, min(800 - self.rect.width, self.rect.x))
         self.rect.y = max(0, min(600 - self.rect.height, self.rect.y))
         self.hitbox.center = self.rect.center
 
         if richtung_geaendert:
-            self.drehen()
+            self.spiegeln()
 
-    def drehen(self):
+    def spiegeln(self):
         if self.ausrichtung == "rechts":
             self.image = pygame.transform.flip(self.lkw_image, False, False)
         elif self.ausrichtung == "links":
