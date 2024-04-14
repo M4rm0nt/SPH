@@ -136,7 +136,7 @@ class SpielZustand:
 
                 self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 0 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (0, 255, 0))
                 self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 200, 1 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (255, 255, 0))
-                self.zeichne_info_balken('Erz im Lager', self.lager.erz, 800, 2 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (0, 0, 255))
+                self.zeichne_info_balken('Erz im Lager', self.lager.erz, 800, 2 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (180, 100, 230))
                 self.zeichne_info_balken('Erzquelle', self.erz_quelle.erz_menge, 1000, 3 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (255, 0, 255))
         else:
             self.zeige_endnachricht()
