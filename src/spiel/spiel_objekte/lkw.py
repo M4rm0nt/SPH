@@ -1,3 +1,5 @@
+from math import sqrt
+
 import pygame
 from main import bild_laden
 
@@ -20,28 +22,38 @@ class LKW(pygame.sprite.Sprite):
         self.kollision_pruefen(erz_quelle, lager, tankstelle, hubschrauber_gruppe)
 
     def bewegen(self, tasten):
+        dx = 0
+        dy = 0
         richtung_geaendert = False
+
         if tasten[pygame.K_LEFT]:
-            self.rect.x -= self.geschwindigkeit
+            dx -= self.geschwindigkeit
             if self.ausrichtung != "links":
                 self.ausrichtung = "links"
                 richtung_geaendert = True
         if tasten[pygame.K_RIGHT]:
-            self.rect.x += self.geschwindigkeit
+            dx += self.geschwindigkeit
             if self.ausrichtung != "rechts":
                 self.ausrichtung = "rechts"
                 richtung_geaendert = True
         if tasten[pygame.K_UP]:
-            self.rect.y -= self.geschwindigkeit
+            dy -= self.geschwindigkeit
         if tasten[pygame.K_DOWN]:
-            self.rect.y += self.geschwindigkeit
+            dy += self.geschwindigkeit
 
-        if richtung_geaendert:
-            self.drehen()
+        if dx != 0 and dy != 0:
+            dx /= sqrt(2)
+            dy /= sqrt(2)
+
+        self.rect.x += int(dx)
+        self.rect.y += int(dy)
 
         self.rect.x = max(0, min(800 - self.rect.width, self.rect.x))
         self.rect.y = max(0, min(600 - self.rect.height, self.rect.y))
         self.hitbox.center = self.rect.center
+
+        if richtung_geaendert:
+            self.drehen()
 
     def drehen(self):
         if self.ausrichtung == "rechts":

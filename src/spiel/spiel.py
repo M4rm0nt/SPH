@@ -111,7 +111,7 @@ class SpielZustand:
             self.hubschrauber_gruppe.update()
             self.ueberpruefe_spielende()
 
-    def zeichne_info_balken(self, titel, wert, max_wert, x, y, balken_breite, balken_hoehe, farbe, zeige_wert=True):
+    def zeichne_info_balken(self, titel, wert, max_wert, x, y, balken_breite, balken_hoehe, farbe, wert_format="{:.0f}", max_format="{:.0f}"):
         schriftart = pygame.font.Font(None, 24)
         balken_hintergrund = pygame.Rect(x, y, balken_breite, balken_hoehe)
         pygame.draw.rect(self.bildschirm, (200, 200, 200), balken_hintergrund)
@@ -121,10 +121,9 @@ class SpielZustand:
         text_surf = schriftart.render(titel, True, (0, 0, 0))
         self.bildschirm.blit(text_surf, (x + 5, y + 5))
 
-        if zeige_wert:
-            wert_text = schriftart.render(f'{wert}/{max_wert}', True, (0, 0, 0))
-            wert_text_rect = wert_text.get_rect(center=(x + balken_breite - 50, y + balken_hoehe // 2))
-            self.bildschirm.blit(wert_text, wert_text_rect)
+        wert_text = schriftart.render(f'{wert_format.format(wert)}/{max_format.format(max_wert)}', True, (0, 0, 0))
+        wert_text_rect = wert_text.get_rect(center=(x + balken_breite - 50, y + balken_hoehe // 2))
+        self.bildschirm.blit(wert_text, wert_text_rect)
 
     def zeichne(self):
         self.bildschirm.fill((255, 255, 255))
@@ -133,13 +132,13 @@ class SpielZustand:
         balken_breite = self.bildschirm.get_width() // 4
         balken_hoehe = 30
         y_position_oben = 0
-        y_position_unten = self.bildschirm.get_height() - balken_hoehe  # Position für den Kraftstoffbalken unten
+        y_position_unten = self.bildschirm.get_height() - balken_hoehe
 
         if self.spiel_laeuft:
             if self.pause:
                 self.zeichne_pause_nachricht()
             else:
-                self.zeichne_info_balken('Kraftstoff', self.lkw.kraftstoff, 100, 0, y_position_unten, balken_breite, balken_hoehe, (255, 0, 0), zeige_wert=False)
+                self.zeichne_info_balken('Kraftstoff', self.lkw.kraftstoff, 100, 0, y_position_unten, balken_breite, balken_hoehe, (255, 0, 0), "{:.2f}", "{:.0f}")
 
                 self.zeichne_info_balken('Erz im LKW', self.lkw.erz, 50, 0 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (0, 255, 0))
                 self.zeichne_info_balken('Erz gestohlen', self.hubschrauber.abgeladenes_erz, 200, 1 * balken_breite, y_position_oben, balken_breite, balken_hoehe, (255, 255, 0))
