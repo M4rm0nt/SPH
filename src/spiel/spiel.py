@@ -72,10 +72,9 @@ class SpielZustand:
         self.tankstelle = Tankstelle()
 
         self.alle_sprites = pygame.sprite.Group()
-        self.hubschrauber_gruppe = pygame.sprite.Group()
-
         self.alle_sprites.add(self.lkw, self.erz_quelle, self.lager, self.tankstelle, self.hubschrauberlandeplatz,
                               self.hubschrauber)
+        self.hubschrauber_gruppe = pygame.sprite.Group()
         self.hubschrauber_gruppe.add(self.hubschrauber)
 
     def verarbeite_ereignisse(self, ereignisse):
@@ -151,7 +150,6 @@ class SpielZustand:
         elif self.lager.erz == 800:
             self.endnachricht = "Gewonnen. Spiel vorbei! Neu starten? (J/N)"
             self.spiel_laeuft = False
-
 
     def zeige_endnachricht(self):
         schrift_gross = pygame.font.SysFont("arial", 36)

@@ -3,12 +3,13 @@ from math import sqrt
 import pygame
 from main import bild_laden
 
+
 class LKW(pygame.sprite.Sprite):
     def __init__(self, geschwindigkeit):
         super().__init__()
-        self.lkw_image = bild_laden('lastwagen')
-        self.image = self.lkw_image
-        self.rect = self.lkw_image.get_rect(center=(400, 550))
+        self.original_bild = bild_laden('lastwagen')
+        self.image = self.original_bild
+        self.rect = self.original_bild.get_rect(center=(400, 550))
         self.hitbox = pygame.Rect(self.rect.left + 40, self.rect.top + 40, self.rect.width - 80, self.rect.height - 80)
         self.geschwindigkeit = geschwindigkeit
         self.kraftstoff = 100
@@ -58,9 +59,9 @@ class LKW(pygame.sprite.Sprite):
 
     def spiegeln(self):
         if self.ausrichtung == "rechts":
-            self.image = pygame.transform.flip(self.lkw_image, False, False)
+            self.image = pygame.transform.flip(self.original_bild, False, False)
         elif self.ausrichtung == "links":
-            self.image = pygame.transform.flip(self.lkw_image, True, False)
+            self.image = pygame.transform.flip(self.original_bild, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
 
     def kraftstoff_verbrauchen(self, tasten):

@@ -5,8 +5,8 @@ from main import bild_laden
 class Hubschrauber(pygame.sprite.Sprite):
     def __init__(self, lkw, hubschrauberlandeplatz, geschwindigkeit):
         super().__init__()
-        self.original_image = bild_laden('hubschrauber')
-        self.image = self.original_image
+        self.original_bild = bild_laden('hubschrauber')
+        self.image = self.original_bild
         self.rect = self.image.get_rect(center=hubschrauberlandeplatz.rect.center)
         self.geschwindigkeit = geschwindigkeit
         self.lkw = lkw
@@ -62,7 +62,7 @@ class Hubschrauber(pygame.sprite.Sprite):
 
     def spiegeln(self):
         if self.ausrichtung == "rechts":
-            self.image = pygame.transform.flip(self.original_image, False, False)
+            self.image = pygame.transform.flip(self.original_bild, False, False)
         elif self.ausrichtung == "links":
-            self.image = pygame.transform.flip(self.original_image, True, False)
+            self.image = pygame.transform.flip(self.original_bild, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
