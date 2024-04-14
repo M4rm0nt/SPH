@@ -9,7 +9,7 @@ class LKW(pygame.sprite.Sprite):
         self.lkw_image = bild_laden('lastwagen')
         self.image = self.lkw_image
         self.rect = self.lkw_image.get_rect(center=(400, 550))
-        self.hitbox = pygame.Rect(self.rect.left + 10, self.rect.top + 10, self.rect.width - 20, self.rect.height - 20)
+        self.hitbox = pygame.Rect(self.rect.left + 40, self.rect.top + 40, self.rect.width - 80, self.rect.height - 80)
         self.geschwindigkeit = geschwindigkeit
         self.kraftstoff = 100
         self.erz = 0

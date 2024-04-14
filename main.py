@@ -8,8 +8,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 
 def bild_laden(name):
-    pfad = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/bilder"), f'{name}.png')
-    return pygame.image.load(pfad).convert_alpha()
+    png_pfad = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/bilder"), f'{name}.png')
+    return pygame.image.load(png_pfad).convert_alpha()
 
 
 def main():

@@ -53,14 +53,9 @@ class SpielZustand:
         self.erz_quelle = zustand['erz_quelle']
         self.lkw.geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
         self.hubschrauber.geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
-
-
         self.alle_sprites = pygame.sprite.Group()
         self.hubschrauber_gruppe = pygame.sprite.Group()
-        self.alle_sprites.add(self.lkw, self.erz_quelle, self.lager, self.tankstelle, self.hubschrauberlandeplatz,
-                              self.hubschrauber)
-        self.hubschrauber_gruppe.add(self.hubschrauber)
-
+        self.alle_sprites.add(self.lkw, self.erz_quelle, self.lager, self.tankstelle, self.hubschrauberlandeplatz, self.hubschrauber)
         self.hubschrauber_gruppe.add(self.hubschrauber)
 
     def initialisiere_spiel(self):
