@@ -15,10 +15,9 @@ class SpielZustand:
         self.bildschirm = bildschirm
         self.uhr = uhr
         self.konfiguration = konfiguration
-        self.gespeicherter_zustand = None
-        self.pause = False
-        self.endnachricht = ""
         self.spiel_laeuft = True
+        self.pause = False
+        self.gespeicherter_zustand = None
         self.lkw = None
         self.hubschrauberlandeplatz = None
         self.hubschrauber = None
@@ -27,6 +26,7 @@ class SpielZustand:
         self.erz_quelle = None
         self.alle_sprites = None
         self.hubschrauber_gruppe = None
+        self.endnachricht = ""
         if gespeicherter_zustand:
             self.lade_zustand(gespeicherter_zustand)
         else:
@@ -46,13 +46,13 @@ class SpielZustand:
     def lade_zustand(self, zustand):
         self.konfiguration.lade_konfiguration()
         self.lkw = zustand['lkw']
-        self.hubschrauberlandeplatz = zustand['hubschrauberlandeplatz']
+        self.lkw.geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
         self.hubschrauber = zustand['hubschrauber']
+        self.hubschrauber.geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
+        self.hubschrauberlandeplatz = zustand['hubschrauberlandeplatz']
         self.tankstelle = zustand['tankstelle']
         self.lager = zustand['lager']
         self.erz_quelle = zustand['erz_quelle']
-        self.lkw.geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
-        self.hubschrauber.geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
         self.alle_sprites = pygame.sprite.Group()
         self.hubschrauber_gruppe = pygame.sprite.Group()
         self.alle_sprites.add(self.lkw, self.erz_quelle, self.lager, self.tankstelle, self.hubschrauberlandeplatz, self.hubschrauber)
@@ -60,10 +60,11 @@ class SpielZustand:
 
     def initialisiere_spiel(self):
         self.konfiguration.lade_konfiguration()
-        lkw_geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
-        hubschrauber_geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
 
+        lkw_geschwindigkeit = self.konfiguration.lkw_geschwindigkeit
         self.lkw = LKW(lkw_geschwindigkeit)
+
+        hubschrauber_geschwindigkeit = self.konfiguration.hubschrauber_geschwindigkeit
         self.hubschrauberlandeplatz = Hubschrauberlandeplatz()
         self.hubschrauber = Hubschrauber(self.lkw, self.hubschrauberlandeplatz, hubschrauber_geschwindigkeit)
 

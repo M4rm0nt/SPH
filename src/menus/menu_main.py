@@ -3,7 +3,7 @@ import pygame
 from src.menus.menu_objekte.menu_button import Button
 from src.menus.menu_options import OptionenMenu
 from src.menus.menu_hilfe import HilfeMenu
-from src.spiel.spiel import SpielZustand
+from src.spiel.spiel_zustand import SpielZustand
 
 
 class HauptmenuZustand:

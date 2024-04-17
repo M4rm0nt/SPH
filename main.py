@@ -8,8 +8,17 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 
 def bild_laden(name):
-    png_pfad = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ressourcen/bilder"), f'{name}.png')
-    return pygame.image.load(png_pfad).convert_alpha()
+    basispfad = os.path.dirname(os.path.abspath(__file__))
+    bildpfad = os.path.join(basispfad, "ressourcen", "bilder", f"{name}.png")
+
+    if not os.path.exists(bildpfad):
+        raise FileNotFoundError(f"Das Bild {bildpfad} konnte nicht gefunden werden.")
+
+    try:
+        bild = pygame.image.load(bildpfad).convert_alpha()
+        return bild
+    except pygame.error as e:
+        raise IOError(f"Fehler beim Laden des Bildes {name}.png: {e}")
 
 
 def main():
@@ -32,7 +41,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        from src.spiel.spiel import SpielZustand
+        from src.spiel.spiel_zustand import SpielZustand
         neuer_zustand = zustand.verarbeite_ereignisse(ereignisse)
         if isinstance(neuer_zustand, SpielZustand) or isinstance(neuer_zustand, HauptmenuZustand):
             if neuer_zustand != zustand:
