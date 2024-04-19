@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 import pygame
 
@@ -19,6 +20,19 @@ def bild_laden(name):
         return bild
     except pygame.error as e:
         raise IOError(f"Fehler beim Laden des Bildes {name}.png: {e}")
+
+
+def platziere_objekte_sicher(anzahl_objekte, bereich_breite, bereich_hoehe, mindestabstand):
+    platzierte_positionen = []
+    for _ in range(anzahl_objekte):
+        while True:
+            x = random.randint(0, bereich_breite)
+            y = random.randint(0, bereich_hoehe)
+            abstand_ok = all(abs(x - pos[0]) > mindestabstand or abs(y - pos[1]) > mindestabstand for pos in platzierte_positionen)
+            if abstand_ok:
+                platzierte_positionen.append((x, y))
+                break
+    return platzierte_positionen
 
 
 def main():

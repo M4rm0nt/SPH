@@ -1,3 +1,4 @@
+import random
 from math import sqrt
 
 import pygame
@@ -9,7 +10,7 @@ class LKW(pygame.sprite.Sprite):
         super().__init__()
         self.original_bild = bild_laden('lastwagen')
         self.image = self.original_bild
-        self.rect = self.original_bild.get_rect(center=(400, 550))
+        self.rect = self.image.get_rect(center=(random.randint(100, 700), random.randint(100, 500)))
         self.hitbox = pygame.Rect(self.rect.left + 40, self.rect.top + 40, self.rect.width - 80, self.rect.height - 80)
         self.geschwindigkeit = geschwindigkeit
         self.kraftstoff = 100
