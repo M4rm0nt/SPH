@@ -11,7 +11,7 @@ class LKW(pygame.sprite.Sprite):
         self.original_bild = bild_laden('lastwagen')
         self.image = self.original_bild
         self.rect = self.image.get_rect(center=(random.randint(100, 120), random.randint(100, 500)))
-        self.hitbox = pygame.Rect(self.rect.left + 40, self.rect.top + 40, self.rect.width - 80, self.rect.height - 80)
+        self.hitbox = pygame.Rect(self.rect.left + 10, self.rect.top + 10, self.rect.width - 10, self.rect.height - 10)
         self.geschwindigkeit = geschwindigkeit
         self.kraftstoff = 100
         self.erz = 0
@@ -44,9 +44,9 @@ class LKW(pygame.sprite.Sprite):
             lkw_y += self.geschwindigkeit
 
         if lkw_x != 0 and lkw_y != 0:
-            norm = sqrt(2)
-            lkw_x /= norm
-            lkw_y /= norm
+            diagonalGeschwindigkeitsAusgleichfaktor = sqrt(2)
+            lkw_x /= diagonalGeschwindigkeitsAusgleichfaktor
+            lkw_y /= diagonalGeschwindigkeitsAusgleichfaktor
 
         self.rect.x += int(lkw_x)
         self.rect.y += int(lkw_y)
